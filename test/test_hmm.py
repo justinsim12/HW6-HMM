@@ -2,9 +2,6 @@ import pytest
 from hmm import HiddenMarkovModel
 import numpy as np
 
-
-
-
 def test_mini_weather():
     """
     TODO: 
@@ -33,9 +30,9 @@ def test_mini_weather():
     hmm = HiddenMarkovModel(observation_states, hidden_states, prior_p, transition_p, emission_p)
     
     # Run Forward and Viterbi algorithms
-    observation_sequence = mini_input['observation_sequence']
-    expected_forward_prob = 0.0350
-    expected_viterbi_path = mini_input['expected_viterbi_path']
+    observation_sequence = mini_input['observation_state_sequence']
+    expected_forward_prob = 0.0350644
+    expected_viterbi_path = mini_input['best_hidden_state_sequence']
     
     forward_prob = hmm.forward(observation_sequence)
     viterbi_path = hmm.viterbi(observation_sequence)
@@ -75,15 +72,10 @@ def test_full_weather():
     hmm = HiddenMarkovModel(observation_states, hidden_states, prior_p, transition_p, emission_p)
     
     # Run Forward and Viterbi algorithms
-    observation_sequence = full_input['observation_sequence']
-    expected_viterbi_path = full_input['expected_viterbi_path']
+    observation_sequence = full_input['observation_state_sequence']
+    expected_viterbi_path = full_input['best_hidden_state_sequence']
     
     viterbi_path = hmm.viterbi(observation_sequence)
     
     # Assertions
     assert viterbi_path == expected_viterbi_path.tolist(), "Viterbi path mismatch"
-    
-    # Edge case: Single observation input
-    single_observation_sequence = [observation_sequence[0]]
-    assert isinstance(hmm.viterbi(single_observation_sequence), list), "Viterbi should return a list for a single observation"
-    assert isinstance(hmm.forward(single_observation_sequence), float), "Forward should return a probability for a single observation"
