@@ -10,14 +10,14 @@ pythonpath = [
 ]
 
 [project]
-name = "seqparser"
+name = "HMM"
 authors = [{name = "Justin Sim", email = "justin.sim@ucsf.edu"}]
 readme = "README.md"
 license = {file = "LICENSE"}
 classifiers = ["License :: OSI Approved :: MIT License"]
 dynamic = ["version", "description"]
 dependencies = [
-    "pytest"
+    "pytest" , "numpy"
 ]
 requires-python=">3.7"
 
