@@ -1,3 +1,116 @@
+HiddenMarkovModel
+
+Overview
+
+The HiddenMarkovModel class implements a Hidden Markov Model (HMM) with functionalities to compute the likelihood of an observation sequence using the Forward algorithm and to decode the most likely sequence of hidden states using the Viterbi algorithm.
+
+Initialization
+
+HiddenMarkovModel(observation_states, hidden_states, prior_p, transition_p, emission_p)
+
+Parameters:
+
+observation_states (np.ndarray): List of possible observed states.
+
+hidden_states (np.ndarray): List of possible hidden states.
+
+prior_p (np.ndarray): Prior probabilities of the hidden states.
+
+transition_p (np.ndarray): Transition probabilities between hidden states.
+
+emission_p (np.ndarray): Emission probabilities from hidden states to observed states.
+
+Methods
+
+forward(input_observation_states: np.ndarray) -> float
+
+Description:
+
+Computes the probability of an observation sequence using the Forward algorithm.
+
+Parameters:
+
+input_observation_states (np.ndarray): Sequence of observed states.
+
+Returns:
+
+float: The likelihood of the given observation sequence occurring under the model.
+
+Algorithm Steps:
+
+Initialize the forward matrix with the prior and emission probabilities.
+
+Iterate through time steps, updating probabilities based on previous states and transition probabilities.
+
+Sum the final probabilities to get the likelihood of the sequence.
+
+Edge Cases:
+
+If the input observation sequence is empty, the function returns 0.
+
+viterbi(decode_observation_states: np.ndarray) -> list
+
+Description:
+
+Finds the most probable sequence of hidden states for a given sequence of observations using the Viterbi algorithm.
+
+Parameters:
+
+decode_observation_states (np.ndarray): Sequence of observed states to decode.
+
+Returns:
+
+list: The most likely sequence of hidden states that generated the observed sequence.
+
+Algorithm Steps:
+
+Initialize the Viterbi table and backpointer matrix.
+
+Iterate through time steps, computing the highest probability path to each state.
+
+Traceback from the final state to retrieve the most likely sequence of hidden states.
+
+Edge Cases:
+
+If the input observation sequence is empty, the function returns an empty list.
+
+Example Usage
+
+import numpy as np
+
+# Define states and probabilities
+observation_states = np.array(['A', 'B', 'C'])
+hidden_states = np.array(['X', 'Y'])
+prior_p = np.array([0.6, 0.4])
+transition_p = np.array([[0.7, 0.3], [0.4, 0.6]])
+emission_p = np.array([[0.5, 0.4, 0.1], [0.1, 0.3, 0.6]])
+
+# Create HMM instance
+hmm = HiddenMarkovModel(observation_states, hidden_states, prior_p, transition_p, emission_p)
+
+# Run forward algorithm
+observations = np.array(['A', 'B', 'C'])
+probability = hmm.forward(observations)
+print("Forward Probability:", probability)
+
+# Run Viterbi algorithm
+best_hidden_sequence = hmm.viterbi(observations)
+print("Most Likely Hidden State Sequence:", best_hidden_sequence)
+
+Notes
+
+This implementation assumes that observation_states and hidden_states are mapped correctly to their respective indices.
+
+The transition_p and emission_p matrices must be properly normalized (rows should sum to 1).
+
+License
+
+MIT License.
+
+
+
+
+
 # HW6-HMM
 
 In this assignment, you'll implement the Forward and Viterbi Algorithms (dynamic programming). 
